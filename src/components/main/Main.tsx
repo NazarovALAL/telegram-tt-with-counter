@@ -61,6 +61,7 @@ import StickerSetModal from '../common/StickerSetModal.async';
 import UnreadCount from '../common/UnreadCounter';
 import LeftColumn from '../left/LeftColumn';
 import MediaViewer from '../mediaViewer/MediaViewer.async';
+import MessageCounter from '../MessageCounter';
 import ReactionPicker from '../middle/message/reactions/ReactionPicker.async';
 import MessageListHistoryHandler from '../middle/MessageListHistoryHandler';
 import MiddleColumn from '../middle/MiddleColumn';
@@ -99,6 +100,7 @@ export interface OwnProps {
 type StateProps = {
   isMasterTab?: boolean;
   currentUserId?: string;
+  chatId: any;
   isLeftColumnOpen: boolean;
   isMiddleColumnOpen: boolean;
   isRightColumnOpen: boolean;
@@ -192,6 +194,7 @@ const Main = ({
   isMasterTab,
   noRightColumnAnimation,
   isSynced,
+  chatId,
   currentUserId,
 }: OwnProps & StateProps) => {
   const {
@@ -540,6 +543,7 @@ const Main = ({
     <div ref={containerRef} id="Main" className={className}>
       <LeftColumn ref={leftColumnRef} />
       <MiddleColumn leftColumnRef={leftColumnRef} isMobile={isMobile} />
+      <MessageCounter key={chatId} />
       <RightColumn isMobile={isMobile} />
       <MediaViewer isOpen={isMediaViewerOpen} />
       <StoryViewer isOpen={isStoryViewerOpen} />
@@ -642,6 +646,7 @@ export default memo(withGlobal<OwnProps>(
     return {
       currentUserId,
       isLeftColumnOpen: isLeftColumnShown,
+      chatId,
       isMiddleColumnOpen: Boolean(chatId),
       isRightColumnOpen: selectIsRightColumnShown(global, isMobile),
       isMediaViewerOpen: selectIsMediaViewerOpen(global),
